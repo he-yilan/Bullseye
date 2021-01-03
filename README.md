@@ -1,2 +1,2 @@
-# Bullseye
-## Ray Wenderlich Bullseye app 2019
+# Bull's Eye
+## Ray Wenderlich Bull's Eye app 2019
