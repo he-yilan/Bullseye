@@ -15,6 +15,8 @@ struct ContentView: View {
     @State var target = Int.random(in: 1...100)
     @State var totalScore = 0
     @State var roundNum = 1
+    @State var meanPts = 0
+    
     let midnightBlue = Color(red: 0, green: 51/255, blue: 102/255)
     
     struct LabelStyle: ViewModifier {
@@ -95,6 +97,7 @@ var body: some View {
                             self.totalScore = self.totalScore + self.pointsForCurrentRound()
                             self.target = Int.random(in: 1...100)
                             self.roundNum = self.roundNum + 1
+                            self.meanPts = calcMean()
                 })
         }
         .background(Image("Button")).modifier(Shadow())
@@ -111,11 +114,15 @@ var body: some View {
                     }
                 }.background(Image("Button")).modifier(Shadow())
                 Spacer()
+                Group {
                 Text("Score: ").modifier(LabelStyle())
                 Text("\(totalScore)").modifier(ValueStyle())
                 Spacer()
                 Text("Round: ").modifier(LabelStyle())
                 Text("\(roundNum)").modifier(ValueStyle())
+                Spacer()
+                Text("Average Points: ").modifier(LabelStyle())
+                Text("\(meanPts)").modifier(ValueStyle())
                 Spacer()
                 NavigationLink(destination: AboutView()) {
                     HStack{
@@ -123,6 +130,7 @@ var body: some View {
                         Text("Info").modifier(ButtonSmallTextStyle())
                     }
                 }.background(Image("Button")).modifier(Shadow())
+            }
             }
             .padding(.bottom, 50)
             
@@ -176,7 +184,14 @@ var body: some View {
         totalScore = 0
         roundNum = 1
         sliderValue = 50.0
+        meanPts = 0
         target = Int.random(in: 1...100)
+    }
+    
+    func calcMean() -> Int
+    {
+        let mean = totalScore/roundNum
+        return mean
     }
     
 }
